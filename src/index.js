@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import PreloadScene from './scenes/PreloadScene';
 import PlayScene from './scenes/PlayScene';
 
-const WIDTH = 400;
+const WIDTH = 1600 //400;
 const HEIGHT = 600;
 const BIRD_POSITION = {x: WIDTH / 10, y: HEIGHT / 2};
 

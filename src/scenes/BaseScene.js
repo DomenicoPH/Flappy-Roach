@@ -13,6 +13,14 @@ class BaseScene extends Phaser.Scene{
             fontSize: `${this.fontSize}px`,
             fill: '#CDFFFF'
         }
+        this.currentDifficulty = 'only';
+        this.difficulties = {
+            //Define la dificultad en base a la separación vertical y horizontal de los obstáculos
+            'only': {
+                horizontalDistanceRange: [320, 370],
+                verticalDistanceRange: [160, 210],
+            }
+        }
     }
 
     create(){

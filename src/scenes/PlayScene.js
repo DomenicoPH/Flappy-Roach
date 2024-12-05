@@ -14,6 +14,7 @@ class PlayScene extends BaseScene{
 
     create(){
         this.createBG();
+        this.createPipes();
         this.createPlayer();
         this.animatePlayer();
     }
@@ -51,7 +52,34 @@ class PlayScene extends BaseScene{
             this.placePipe(upperPipe, lowerPipe)
         };
 
-        this.pipes.setVelocityX(-this.VELOCITY);
+        //this.pipes.setVelocityX(-this.VELOCITY);
+    }
+
+    placePipe(upperPipe, lowerPipe){
+        const difficulty = this.difficulties[this.currentDifficulty]; // Nivel de dificultad (BaseScene)
+        const rightMostX = this.getRightMostPipe();
+        
+        let verticalDistance = Phaser.Math.Between(...difficulty.verticalDistanceRange);
+        let verticalPosition = Phaser.Math.Between(0 + 20, this.config.height - 20 - verticalDistance);
+        let horizontalDistance = Phaser.Math.Between(...difficulty.horizontalDistanceRange);
+
+        upperPipe.x = rightMostX + horizontalDistance
+            // Tubo Superior - pos. X: 
+        upperPipe.y = verticalPosition
+            // Tubo Superior - pos. Y: 
+        lowerPipe.x = upperPipe.x
+            // Tubo Inferior - pos. X: 
+        lowerPipe.y = upperPipe.y + verticalDistance
+            // Tubo Inferior - pos. Y: 
+    }
+
+    getRightMostPipe(){ /* Obtiene el tubo más a la derecha */
+        let rightMostX = 0; 
+        this.pipes.getChildren().forEach(function(pipe){
+            rightMostX = Math.max(pipe.x, rightMostX);
+            // Math.max toma el valor mayor entre los argumentos que se le proporcionan y lo asigna a rightMostX
+        })
+        return rightMostX;
     }
 };
 
