@@ -17,12 +17,14 @@ class PlayScene extends BaseScene{
         this.createBG();
         this.createPipes();
         this.createPlayer();
+        this.pipePlayerColliders();
         this.animatePlayer();
         this.playerControl();
     }
 
     update(){
         this.recyclePipes();
+        this.checkGameStatus();
     }
 
     // -- FUNCIONES -- //
@@ -133,6 +135,31 @@ class PlayScene extends BaseScene{
     flap(){
         this.player.body.velocity.y = -this.flapVelocity;
     }
+
+    // GAME STATUS -------------------------------------------------------------------------------------------------------------------------------------------------------- GAME STATUS
+
+    gameOver(){
+        this.physics.pause();
+        this.player.setTint(0xEE4824);
+        this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                this.scene.restart();
+            },
+            loop: false,
+        })
+    }
+
+    checkGameStatus(){
+        if(this.player.y <= 0 || this.player.getBounds().bottom >= this.config.height){
+            this.gameOver();
+        }
+    }
+
+    pipePlayerColliders(){
+        this.physics.add.collider(this.player, this.pipes, this.gameOver, null, this);
+    }
+
 
 };
 
